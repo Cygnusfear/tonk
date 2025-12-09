@@ -7,7 +7,10 @@ WORKDIR /app
 COPY packages/launcher/ ./
 
 # Remove local node_modules if any, install fresh
-RUN rm -rf node_modules && bun install --ignore-scripts
+# Remove security scanner config (not needed in CI, causes install failure)
+RUN rm -rf node_modules && \
+    sed -i '/\[install.security\]/,/^$/d' bunfig.toml && \
+    bun install --ignore-scripts
 
 # Build: service worker + vite build (skip build:host)
 RUN bun run setup-wasm && \
