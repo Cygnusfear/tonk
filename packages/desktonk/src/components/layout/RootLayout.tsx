@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useFeatureFlag } from '@/hooks/useFeatureFlag';
 import { useMembersBar } from '@/features/members-bar/stores/membersBarStore';
 import { MembersBar } from '@/features/members-bar/components/MembersBar';
+import { Dock } from '@/features/dock';
 
 export function RootLayout() {
   const showMembersBar = useFeatureFlag('showMembersBar');
@@ -16,6 +17,9 @@ export function RootLayout() {
 
       {/* Members bar */}
       {showMembersBar && isOpen && <MembersBar />}
+
+      {/* Dock */}
+      <Dock />
     </div>
   );
 }
